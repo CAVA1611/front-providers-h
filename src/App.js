@@ -1,8 +1,8 @@
 
 import './App.css';
-import Provider from './Provider';
+import Providers from './Providers';
 
-const c = 
+const c = [
   {cif: "A58818501",
   name: "Proveedor 1",
   address: "Sevilla",
@@ -10,7 +10,17 @@ const c =
   phone: "0976543234",
   email:"provedor1@gmail.com",
   code: "ABC123",
+  stock_sale: "200"},
+  {cif: "A56783245",
+  name: "Proveedor 2",
+  address: "Madrid",
+  cp:"21832",
+  phone: "0987635241",
+  email:"provedor2@gmail.com",
+  code: "CDE456",
   stock_sale: "200"}
+]
+
 
 
 
@@ -21,7 +31,7 @@ function App() {
   return (
     <div className="App">
       <h1>Providers APP - Online Store</h1>
-      <Provider provider={c}/> 
+      <Providers providers={c}/> 
     </div>
   );
 }
