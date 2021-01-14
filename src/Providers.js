@@ -1,12 +1,84 @@
 
-import Provider from './Provider.js';
+import  EditableProvider from './EditableProvider.js';
+import { Fragment, useState } from 'react';
+import Alert from './Alert.js';
+import NewProvider from './NewProvider.js';
 
 function Providers(props) {
 
 
+    const [message, setMessage] = useState(null);
+    const [providers, setProviders] = useState(props.providers);
 
+    function onAlertClose() {
+        setMessage(null);
+    };
+
+    function onProviderDelete(provider) {
+        setProviders((prevProviders) => {
+            return prevProviders.filter((c) => c.name !== provider.name)
+        });
+    }
+
+
+    function validateProviderCIF(provider) {
+        if(provider.cif === ''){
+            setMessage('A CIF must be provided');
+            return false;
+        }
+
+        //if(providers.find(c => c.cif === provider.cif)){
+        //    setMessage('Duplicate CIF')
+        //    return false;
+        //}
+
+        return true;
+        
+    }
+
+    function onProviderEdit(newProvider, oldProvider) {
+        const validation =  validateProviderCIF(newProvider);
+        if(! validation) {
+            return false;
+        }
+        if(newProvider.cif !== oldProvider.cif){
+            setMessage('Cannot change de CIF');
+            return false;
+        }
+
+        setProviders((prevProviders) => {
+            return prevProviders.map((c) => c.cif === oldProvider.cif ? newProvider : c);
+            
+        });
+
+        return true;
+       
+    }
+
+    function onAddProvider(provider) { 
+
+        const validation = validateProviderCIF(provider);
+        if(! validation) {
+            return false;
+        }
+
+
+        setProviders((prevProviders) => {
+            if(! prevProviders.find(c => c.cif === provider.cif)){
+             return [...prevProviders, provider]
+            } else {
+                setMessage('Duplicate CIF')
+                return prevProviders;
+            }
+         });
+
+    }
+
+    
 
     return(
+        <Fragment>
+            <Alert message={message} onClose={onAlertClose}/>
             <table className="table">
                 <thead>
                     <tr>
@@ -22,13 +94,13 @@ function Providers(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {
-                    props.providers.map((provider) => 
-                    <Provider key={provider.cif} provider={provider}/>)
-                    }
+                    <NewProvider onAddProvider={onAddProvider}/>
+                    {providers.map((provider) => 
+                        <EditableProvider key={provider.cif} provider={provider} onEdit={(newProvider) => onProviderEdit(newProvider, provider)} onDelete={onProviderDelete}/>
+                    )}
                 </tbody>
             </table>
-       
+        </Fragment>
     )
 
 }

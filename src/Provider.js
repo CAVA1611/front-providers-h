@@ -9,9 +9,10 @@ function Provider(props) {
             <td>{props.provider.phone}</td>
             <td>{props.provider.email}</td>
             <td>
-                <button className="btn btn-primary" >Edit</button>
-                <button className="btn btn-primary" >Delete</button>
+                <button className="btn btn-primary" onClick={() => props.onEdit(props.provider)}>Edit</button>
+                <button className="btn btn-primary" onClick={() => props.onDelete(props.provider)}>Delete</button>
             </td>
+
         </tr>
     )
     
