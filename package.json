@@ -18,6 +18,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://host.docker.internal:4530",
   "eslintConfig": {
     "extends": [
       "react-app",
