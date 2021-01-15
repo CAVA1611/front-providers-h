@@ -1,14 +1,29 @@
 
 import  EditableProvider from './EditableProvider.js';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import Alert from './Alert.js';
 import NewProvider from './NewProvider.js';
+import ProvidersAPI from './ProvidersApi.js';
+
 
 function Providers(props) {
 
 
     const [message, setMessage] = useState(null);
-    const [providers, setProviders] = useState(props.providers);
+    const [providers, setProviders] = useState([]);
+
+    useEffect(() => {
+        async function fetchProviders() {
+            try {
+                const c = await ProvidersAPI.getAllProviders();
+                setProviders(c);
+            } catch(error) {
+                setMessage('Could not provider with the server');
+            }
+        }
+        fetchProviders();
+
+    }, []);
 
     function onAlertClose() {
         setMessage(null);
