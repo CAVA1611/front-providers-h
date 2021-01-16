@@ -1,5 +1,5 @@
 class ProvidersAPI {
-    static API_BASE_URL = "/api/v3";
+    static API_BASE_URL = "/api/v1";
 
     static requestHeaders() {
         return {}
