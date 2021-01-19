@@ -1,4 +1,3 @@
-
 import  EditableProvider from './EditableProvider.js';
 import { Fragment, useEffect, useState } from 'react';
 import Alert from './Alert.js';
@@ -6,11 +5,14 @@ import NewProvider from './NewProvider.js';
 import ProvidersAPI from './ProvidersApi.js';
 
 
+
 function Providers(props) {
 
 
     const [message, setMessage] = useState(null);
     const [providers, setProviders] = useState([]);
+    
+
 
     useEffect(() => {
         async function fetchProviders() {
@@ -18,7 +20,7 @@ function Providers(props) {
                 const c = await ProvidersAPI.getAllProviders();
                 setProviders(c);
             } catch(error) {
-                setMessage('Could not provider with the server');
+                setMessage('Could not onnect with the server');
             }
         }
         fetchProviders();
@@ -30,9 +32,15 @@ function Providers(props) {
     };
 
     function onProviderDelete(provider) {
-        setProviders((prevProviders) => {
-            return prevProviders.filter((c) => c.name !== provider.name)
-        });
+        //console.log(provider)
+        //call API -DELETE by cif
+        ProvidersAPI.deleteById(provider.cif).then(res =>{
+            //console.log("update virtual dom")
+           setProviders((prevProviders) => {
+               return prevProviders.filter((c) => c.name !== provider.name)
+        })
+    });
+          
     }
 
 
@@ -41,11 +49,6 @@ function Providers(props) {
             setMessage('A CIF must be provided');
             return false;
         }
-
-        //if(providers.find(c => c.cif === provider.cif)){
-        //    setMessage('Duplicate CIF')
-        //    return false;
-        //}
 
         return true;
         
@@ -56,6 +59,13 @@ function Providers(props) {
         if(! validation) {
             return false;
         }
+                //Call API - PUT Proider
+                ProvidersAPI.updateById(newProvider).then(resp =>{
+                    console.log("actualizacion exitosa")
+                    //console.log(resp)
+
+                });
+
         if(newProvider.cif !== oldProvider.cif){
             setMessage('Cannot change de CIF');
             return false;
@@ -75,6 +85,21 @@ function Providers(props) {
         const validation = validateProviderCIF(provider);
         if(! validation) {
             return false;
+        }else {
+            //Call API 
+            async function addProvider() {
+                try {
+                    console.log(provider)
+                     const response = await ProvidersAPI.postProvider(provider);
+                    console.log(response);
+                    
+                } catch(error) {
+                    console.log(error)
+                    setMessage('Could not onnect with the server');
+                }
+            }
+
+            addProvider();
         }
 
 
@@ -85,8 +110,7 @@ function Providers(props) {
                 setMessage('Duplicate CIF')
                 return prevProviders;
             }
-         });
-
+         });     
     }
 
     
