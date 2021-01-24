@@ -23,8 +23,7 @@ function NewProvider(props) {
         };
 
         const result = props.onAddProvider(newProvider);
-
-        if(result) {
+        if(!result) {
             setCif('');
             setName('');
             setAddress('');

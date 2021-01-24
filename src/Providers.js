@@ -14,6 +14,10 @@ function Providers(props) {
     
 
 
+    //function onProviderCancel(provider) {
+    //    setProviders(false);
+    //};
+
     useEffect(() => {
         async function fetchProviders() {
             try {
@@ -32,10 +36,8 @@ function Providers(props) {
     };
 
     function onProviderDelete(provider) {
-        //console.log(provider)
         //call API -DELETE by cif
         ProvidersAPI.deleteById(provider.cif).then(res =>{
-            //console.log("update virtual dom")
            setProviders((prevProviders) => {
                return prevProviders.filter((c) => c.name !== provider.name)
         })
@@ -60,11 +62,7 @@ function Providers(props) {
             return false;
         }
                 //Call API - PUT Proider
-                ProvidersAPI.updateById(newProvider).then(resp =>{
-                    console.log("actualizacion exitosa")
-                    //console.log(resp)
-
-                });
+                ProvidersAPI.updateById(newProvider)
 
         if(newProvider.cif !== oldProvider.cif){
             setMessage('Cannot change de CIF');
@@ -86,19 +84,15 @@ function Providers(props) {
         if(! validation) {
             return false;
         }else {
-            //Call API 
+            //Call API - PORST method
             async function addProvider() {
                 try {
-                    console.log(provider)
-                     const response = await ProvidersAPI.postProvider(provider);
-                    console.log(response);
-                    
+                    await ProvidersAPI.postProvider(provider);  
                 } catch(error) {
                     console.log(error)
-                    setMessage('Could not onnect with the server');
+                    setMessage('Could not connect with the server');
                 }
             }
-
             addProvider();
         }
 
@@ -135,7 +129,10 @@ function Providers(props) {
                 <tbody>
                     <NewProvider onAddProvider={onAddProvider}/>
                     {providers.map((provider) => 
-                        <EditableProvider key={provider.cif} provider={provider} onEdit={(newProvider) => onProviderEdit(newProvider, provider)} onDelete={onProviderDelete}/>
+                        <EditableProvider key={provider.cif} provider={provider} 
+                        onEdit={(newProvider) => onProviderEdit(newProvider, provider)} 
+                        onDelete={onProviderDelete}
+                        /> //onCancel={onProviderCancel}
                     )}
                 </tbody>
             </table>

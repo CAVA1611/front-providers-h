@@ -20,7 +20,7 @@ function EditProvider(props) {
             <td><td><input className="form-control" nanme="email" value={email} onChange={(event) => setEmail(event.target.value)} /></td></td>
             <td>
                 <button className="btn btn-primary" onClick={() => props.onSave({cif: cif, name: name, address: address, cp:cp, phone: phone, email: email})}>Save</button>
-                <button className="btn btn-primary" onClick={() => props.onDelete(props.provider)}>Delete</button>
+                <button className="btn btn-primary" onClick={() => props.onDelete(props.provider)}>Delete</button> 
             </td>
 
         </tr>

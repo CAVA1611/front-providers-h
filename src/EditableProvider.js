@@ -15,9 +15,9 @@ function EdittableProvider(props) {
 
     var providerRender;
     if(isEditing){
-        providerRender = <EditProvider provider={props.provider} onDelete={props.onDelete} onSave={saveProvider}/>;
+        providerRender = <EditProvider provider={props.provider} onDelete={props.onDelete}  onSave={saveProvider}/>;
     }else{
-        providerRender = <Provider provider={props.provider} onDelete={props.onDelete} onEdit={() => setIsEditing(true)}/>
+        providerRender = <Provider provider={props.provider} onDelete={props.onDelete}  onEdit={() => setIsEditing(true)}/>
     }
     return providerRender;
 }
