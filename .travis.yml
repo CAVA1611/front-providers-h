@@ -7,9 +7,7 @@ script:
   - npm test
   - npm run build
 deploy:
-  provider: script
-  skip_cleanup: true
-  script:
-    git push heroku main
+  provider: heroku
+  app: fis2020-ui-h
   on:
     branch: main
