@@ -8,6 +8,9 @@ script:
   - npm run build
 deploy:
   provider: heroku
+  skip_cleanup: true
   app: fis2020-ui-h
+  api_key:
+    secure: 3e84ad00-3679-466d-8761-3e6a29b4cc22
   on:
     branch: main
