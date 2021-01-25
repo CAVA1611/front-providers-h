@@ -1,6 +1,11 @@
 
 import './App.css';
 import Providers from './Providers';
+import Breadcrumb from "./Breadcrumb";
+import Image from "./Image";
+import Footer from "./Footer";
+
+
 
 //const c = [
 //  {cif: "A58818501",
@@ -26,7 +31,12 @@ function App() {
   return (
     <div className="App">
       <h1>Providers APP - Online Store</h1>
+      
+      <Breadcrumb/>
       <Providers/> 
+      <Image/>
+
+      <Footer/>
     </div>
   );
 }
