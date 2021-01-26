@@ -47,10 +47,18 @@ function Providers(props) {
 
 
     function validateProviderCIF(provider) {
-        if(provider.cif === ''){
-            setMessage('A CIF must be provided');
+        if(provider.cif === '' || provider.name === '' || provider.address === '' || provider.email === '' || provider.code === ''){
+            setMessage('Cannot leave empty fields');
             return false;
-        }
+        } if(provider.cif.length < 9){
+            setMessage('THE CIF must have at least 9 digits')
+            return false;
+        } if(provider.cp.length < 5){
+            setMessage('The zip code must have at least 5 digits')
+            return false;
+        }//if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", provider.email)){
+           // setMessage('ingreso al mail')
+       // }
 
         return true;
         
